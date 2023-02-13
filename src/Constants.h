@@ -7,13 +7,13 @@ constexpr float PaddleHeight = 160.f;
 constexpr float PaddleOffsetFromEdge = 20.f;
 constexpr float PaddleMoveSpeed = 300.f;
 
-constexpr std::size_t MaxBalls = 30;
-constexpr float BallRelativeSpawnTime = 0.5f;
+constexpr std::size_t MaxBalls = 50;
+constexpr float BallRelativeSpawnTime = 0.2f;
 
 constexpr float MinFiringSpeed = 150.f;
 constexpr float MaxFiringSpeed = 500.f;
 
-constexpr int MaxHealth = 8;
+constexpr int MaxHealth = 800;
 
 constexpr float BoostMultiplier = 4.f;
 constexpr float MaxEnergy = 100.f;

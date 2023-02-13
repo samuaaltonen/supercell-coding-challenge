@@ -18,6 +18,7 @@ public:
 
 	void			fireFromCenter();
 	sf::Vector2f	getVelocity() const { return m_velocity; }
+	void			setVelocity(sf::Vector2f velocity);
 	bool			isMissed() const { return m_missed; }
 
 private:

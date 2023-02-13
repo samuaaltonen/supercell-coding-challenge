@@ -11,6 +11,7 @@
 #include "ControllerInput.h"
 #include "ControllerAI.h"
 #include "resources/Resources.h"
+#include "MathUtils.h"
 
 Game::Game()
 	: m_pPitch(std::make_unique<Pitch>(this))
@@ -105,6 +106,7 @@ void Game::update(float deltaTime)
 		m_renderScore[Side::LEFT] += RenderScoreIncreaseRate * deltaTime * (m_score[Side::LEFT] - m_renderScore[Side::LEFT]);
 	if (m_score[Side::RIGHT] - m_renderScore[Side::RIGHT] >= 0.f)
 		m_renderScore[Side::RIGHT] += RenderScoreIncreaseRate * deltaTime * (m_score[Side::RIGHT] - m_renderScore[Side::RIGHT]);
+	_ballCollisions();
 }
 
 void Game::draw(sf::RenderTarget& target, sf::RenderStates states) const
@@ -238,4 +240,32 @@ float Game::getScore(Side side)
 	if (side == Side::LEFT)
 		return m_score[Side::LEFT];
 	return m_score[Side::RIGHT];
+}
+
+/**
+ * Loops through balls and check collisions with other balls. If there is collisions,
+ * make balls bounce (modify velocity direction accordingly).
+ */
+void	Game::_ballCollisions()
+{
+	for (Ball& ball : balls)
+	{
+		for (Ball& opposite : balls)
+		{
+			if (ball.getPosition() == opposite.getPosition())
+				continue;
+			if (VecLength(opposite.getPosition() - ball.getPosition()) > BallRadius * 2.f)
+				continue;
+			// Collision found
+			float			ballSpeed = VecLength(ball.getVelocity());
+			float			oppositeSpeed = VecLength(opposite.getVelocity());
+			sf::Vector2f	ballVelocity = ball.getVelocity();
+			sf::Vector2f	oppositeVelocity = opposite.getVelocity();
+			sf::Vector2f	bounceEffect = opposite.getPosition() - ball.getPosition();
+
+			ball.setVelocity(VecNormalize(ballVelocity + oppositeVelocity - bounceEffect) * ballSpeed);
+			opposite.setVelocity(VecNormalize(ballVelocity + oppositeVelocity + bounceEffect) * oppositeSpeed);
+			return;
+		}
+	}
 }

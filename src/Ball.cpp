@@ -113,3 +113,8 @@ void Ball::fireFromCenter()
     m_velocity.y = cosf(randomAngle) * speed;
     m_color = colors[(int)(random * 4.f) % 4];
 }
+
+void Ball::setVelocity(sf::Vector2f velocity)
+{
+    m_velocity = velocity;
+}

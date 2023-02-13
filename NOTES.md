@@ -1,7 +1,6 @@
 Ideas:
 - Spawn multiple balls with different colors representing different velocities. Different colors grant extra points.
 - Paddle movement boost with shift. Boost uses energy. AI has also boost.
-- Balls have mass that affect other balls like gravity so it is possible to do trick shots with gravity effects.
 - Balls have collisions
 - With many balls it is easy to lose after small mistake, change losing mechanism to be based on "health" instead. Draw health bar.
 - Colorful particle effects, textures, music, ball sounds
