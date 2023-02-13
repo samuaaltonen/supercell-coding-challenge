@@ -68,8 +68,6 @@ bool Game::initialise(sf::Vector2f pitchSize)
 		return false;
 	}
 
-	audio.playMusic();
-
 	return true;
 }
 
@@ -100,6 +98,8 @@ void Game::update(float deltaTime)
 		m_renderScore[Side::LEFT] += RenderScoreIncreaseRate * deltaTime * (m_score[Side::LEFT] - m_renderScore[Side::LEFT]);
 	if (m_score[Side::RIGHT] - m_renderScore[Side::RIGHT] >= 0.f)
 		m_renderScore[Side::RIGHT] += RenderScoreIncreaseRate * deltaTime * (m_score[Side::RIGHT] - m_renderScore[Side::RIGHT]);
+
+	audio.playMusic();
 }
 
 void Game::draw(sf::RenderTarget& target, sf::RenderStates states) const

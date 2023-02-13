@@ -18,6 +18,7 @@ bool	Audio::initialise()
 	if (!m_music.openFromFile(assetPath + "BinaryChaos.ogg"))
 		return false;
 	m_music.setVolume(m_volume);
+	m_music.setLoop(true);
 	if (!m_bufferScore.loadFromFile(assetPath + "GetAPowerUp.wav"))
 		return false;
 	if (!m_bufferTakeDamage.loadFromFile(assetPath + "ShotMeDown.wav"))
@@ -32,7 +33,8 @@ bool	Audio::initialise()
 
 void	Audio::playMusic()
 {
-	m_music.play();
+	if (m_music.getStatus() != sf::Music::Status::Playing)
+		m_music.play();
 }
 
 void	Audio::playSound(Sounds sound)
