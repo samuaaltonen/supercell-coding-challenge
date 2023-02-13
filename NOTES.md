@@ -22,3 +22,5 @@ Workflow:
 - Noticed that the AI is now way too smart and kinda impossible to defeat. Need to do difficulty slider.
 - Added sound effects. Using free soundpack by GameSupplyGuy, added link/credits to CREDITS.md.
 - Added background music. Using free music track by DavidKBD, added link/credits to CREDITS.md.
+- Added basic menu state. Generated menu background with DALL-E.
+- Added simple controls list to menu. Changed to use mono space font. Using free font "monogram" by datagoblin, added link/credits to CREDITS.md.

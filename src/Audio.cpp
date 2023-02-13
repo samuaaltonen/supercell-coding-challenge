@@ -1,5 +1,4 @@
 #include "Audio.h"
-#include <iostream>
 #include "resources/Resources.h"
 
 Audio::Audio()

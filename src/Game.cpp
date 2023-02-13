@@ -4,6 +4,7 @@
 #include <SFML/System.hpp>
 #include <iostream>
 
+#include "Menu.h"
 #include "Pitch.h"
 #include "Paddle.h"
 #include "Ball.h"
@@ -13,6 +14,7 @@
 
 Game::Game()
 	: m_pPitch(std::make_unique<Pitch>(this))
+	, m_pMenu(std::make_unique<Menu>(this))
 	, m_state(State::MENU)
 	, m_pClock(std::make_unique<sf::Clock>())
 {
@@ -56,7 +58,7 @@ bool Game::initialise(sf::Vector2f pitchSize)
 	m_pClock->restart();
 
 	std::string assetPath = Resources::getAssetPath();
-	if (!m_font.loadFromFile(assetPath + "Lavigne.ttf"))
+	if (!font.loadFromFile(assetPath + "monogram.ttf"))
 	{
 		std::cerr << "Unable to load font" << std::endl;
 		return false;
@@ -68,21 +70,26 @@ bool Game::initialise(sf::Vector2f pitchSize)
 		return false;
 	}
 
+	if (!m_pMenu->initialise())
+		return false;
+
 	return true;
 }
 
 void Game::update(float deltaTime)
 {
+	switch (m_state)
+	{
+		case State::MENU:
+			m_pMenu->update(deltaTime);
+			return;
+
+		case State::GAMEOVER:
+			return;
+	}
+
 	this->_spawnBalls(deltaTime);
 	this->_clearScoredBalls();
-	/*switch (m_state)
-	{
-		case State::WAITING:
-			break;
-
-		case State::ACTIVE:
-			break;
-	}*/
 	m_pPitch->update(deltaTime);
 	m_pPaddles[Side::LEFT]->update(deltaTime);
 	m_pPaddles[Side::RIGHT]->update(deltaTime);
@@ -114,7 +121,7 @@ void Game::draw(sf::RenderTarget& target, sf::RenderStates states) const
 
 	// draw the score
 	sf::Text leftScore;
-	leftScore.setFont(m_font);
+	leftScore.setFont(font);
 	leftScore.setString(std::to_string((int)m_renderScore[Side::LEFT]));
 	leftScore.setFillColor(sf::Color::White);
 	leftScore.setPosition(target.getSize().x * 0.25f, 10.f);
@@ -124,6 +131,9 @@ void Game::draw(sf::RenderTarget& target, sf::RenderStates states) const
 	leftScore.setString(std::to_string((int)m_renderScore[Side::RIGHT]));
 	leftScore.setPosition(target.getSize().x * 0.75f, 10.f);
 	target.draw(leftScore);
+
+	if (m_state == State::MENU)
+		target.draw(*m_pMenu.get());
 }
 
 void Game::addScore(Side side, float amount)

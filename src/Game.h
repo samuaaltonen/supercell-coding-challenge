@@ -8,6 +8,7 @@
 #include "Constants.h"
 #include "Audio.h"
 
+class Menu;
 class Pitch;
 class Paddle;
 class Ball;
@@ -21,6 +22,7 @@ class Game : public sf::Drawable
 public:
 	std::vector<Ball>		balls;
 	sf::Texture				ui_texture;
+	sf::Font				font;
 	Audio					audio;
 
 	enum class State
@@ -51,6 +53,7 @@ public:
 private:
 	float						m_spawnTimer;
 
+	std::unique_ptr<Menu>		m_pMenu;
 	std::unique_ptr<Pitch>		m_pPitch;
 	State						m_state;
 	std::unique_ptr<sf::Clock>	m_pClock;
@@ -60,7 +63,6 @@ private:
 	float						m_score[2];
 	float						m_renderScore[2];
 
-	sf::Font					m_font;
 
 	void _spawnBalls(float deltaTime);
 	void _clearScoredBalls();
