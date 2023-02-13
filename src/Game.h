@@ -42,6 +42,7 @@ public:
 	void			addScore(Side side, float amount);
 
 	State			getState() const { return m_state; }
+	float			getDifficulty() const { return m_difficulty; }
 	Paddle*			getPaddle(Side side) { return m_pPaddles[(int)side].get(); }
 	const Pitch*	getPitch() const { return m_pPitch.get(); }
 
@@ -52,6 +53,7 @@ public:
 
 private:
 	float						m_spawnTimer;
+	float						m_difficulty;
 
 	std::unique_ptr<Menu>		m_pMenu;
 	std::unique_ptr<Pitch>		m_pPitch;

@@ -43,11 +43,15 @@ void ControllerAI::update(float deltaTime)
 	speed = PaddleMoveSpeed;
 
 	// Check if we need to use boost
-	if (distance >= collisionTime * PaddleMoveSpeed)
+	if (m_pGame->getDifficulty() > AIUseBoostDifficultyThreshold
+		&& distance >= collisionTime * PaddleMoveSpeed)
 	{
 		speed *= BoostMultiplier;
 		m_pPaddle->boost(deltaTime);
 	}
+
+	// Dampen speed based on difficulty (maximum difficulty = no dampening = inhuman reactions)
+	speed *= m_pGame->getDifficulty() / MaxAIDifficulty;
 
 	// Move the paddle
 	if (target.y < paddleCenter.y)

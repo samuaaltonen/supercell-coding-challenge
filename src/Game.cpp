@@ -16,6 +16,7 @@ Game::Game()
 	: m_pPitch(std::make_unique<Pitch>(this))
 	, m_pMenu(std::make_unique<Menu>(this))
 	, m_state(State::MENU)
+	, m_difficulty(DefaultAIDifficulty)
 	, m_pClock(std::make_unique<sf::Clock>())
 {
 	m_pPaddles[Side::LEFT] = std::make_unique<Paddle>(this);
@@ -163,12 +164,10 @@ void Game::_handleRepeatableKeys(float deltaTime)
 {
 	float	volume = audio.getVolume();
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::PageUp)
-		|| sf::Keyboard::isKeyPressed(sf::Keyboard::Add)
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Add)
 		|| sf::Keyboard::isKeyPressed(sf::Keyboard::I))
 		volume += VolumeChangeRate * deltaTime;
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::PageDown)
-		|| sf::Keyboard::isKeyPressed(sf::Keyboard::Subtract)
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Subtract)
 		|| sf::Keyboard::isKeyPressed(sf::Keyboard::K))
 		volume -= VolumeChangeRate * deltaTime;
 
@@ -177,6 +176,17 @@ void Game::_handleRepeatableKeys(float deltaTime)
 	if (volume > 100.f)
 		volume = 100.f;
 	audio.setVolume(volume);
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::PageUp)
+		|| sf::Keyboard::isKeyPressed(sf::Keyboard::O))
+		m_difficulty += DifficultyChangeRate * deltaTime;
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::PageDown)
+		|| sf::Keyboard::isKeyPressed(sf::Keyboard::L))
+		m_difficulty -= DifficultyChangeRate * deltaTime;
+	if (m_difficulty < MinAIDifficulty)
+		m_difficulty = MinAIDifficulty;
+	if (m_difficulty > MaxAIDifficulty)
+		m_difficulty = MaxAIDifficulty;
 }
 
 /**

@@ -40,6 +40,11 @@ constexpr float ScorePerGoal = 1000.f;
 constexpr float RenderScoreIncreaseRate = 2.f;
 
 constexpr int AIExhaustion = 3000; // Maximum collision calculations the AI will do in a single update per ball.
+constexpr float MaxAIDifficulty = 100.f;
+constexpr float MinAIDifficulty = 5.f;
+constexpr float DefaultAIDifficulty = 75.f;
+constexpr float AIUseBoostDifficultyThreshold = 25.f;
+constexpr float DifficultyChangeRate = 25.f;
 
 constexpr float DefaultVolume = 25.f;
 constexpr float VolumeChangeRate = 50.f; // per second

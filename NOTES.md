@@ -4,8 +4,7 @@ Ideas:
 - Balls have mass that affect other balls like gravity so it is possible to do trick shots with gravity effects.
 - Balls have collisions
 - With many balls it is easy to lose after small mistake, change losing mechanism to be based on "health" instead. Draw health bar.
-- Paddles have traction so it is possible to alter ball direction with paddle movement
-- Colorful particle effects, textures, music, ball bounce sound, score sound, health lose sound
+- Colorful particle effects, textures, music, ball sounds
 
 Workflow:
 - Fixed a bug where players paddle always goes down. Also made it so that players paddle doesnt automatically move for better control.
