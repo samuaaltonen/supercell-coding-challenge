@@ -5,7 +5,7 @@ constexpr std::size_t BallPoints = 32;
 constexpr float PaddleWidth = 10.f;
 constexpr float PaddleHeight = 160.f;
 constexpr float PaddleOffsetFromEdge = 20.f;
-constexpr float PaddleMoveSpeed = 400.f;
+constexpr float PaddleMoveSpeed = 300.f;
 
 constexpr std::size_t MaxBalls = 10;
 constexpr float BallRelativeSpawnTime = 1.f;
@@ -13,11 +13,24 @@ constexpr float BallRelativeSpawnTime = 1.f;
 constexpr float MinFiringSpeed = 150.f;
 constexpr float MaxFiringSpeed = 500.f;
 
-constexpr float BoostMultiplier = 2.f;
-constexpr float MinEnergy = 15.f;
+constexpr float DefaultHealth = 100.f;
+
+constexpr float BoostMultiplier = 4.f;
 constexpr float MaxEnergy = 100.f;
+constexpr float MinEnergyToBoost = 5.f;
 constexpr float EnergyRegen = 30.f; // regen per second
-constexpr float EnergyUsage = 80.f; // energy usage per second when using
+constexpr float EnergyRegenCooldown = 0.5f; // regen starts after cooldown seconds
+constexpr float EnergyUsage = 40.f; // energy usage per second when using
+
+constexpr float UiMargin = 20.f;
+constexpr float UiGap = 4.f;
+constexpr float HeartCount = 8.f;
+constexpr float HeartWidth = 34.f;
+constexpr float HeartHeight = 31.f;
+constexpr float BatteryCount = 12.f;
+constexpr float EnergyIconOffset = 360.f;
+constexpr float EnergyWidth = 20.f;
+constexpr float EnergyHeight = 31.f;
 
 enum Side
 {

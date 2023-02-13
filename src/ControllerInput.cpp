@@ -19,10 +19,10 @@ void ControllerInput::update(float deltaTime)
 
     if ((sf::Keyboard::isKeyPressed(sf::Keyboard::LShift)
         || sf::Keyboard::isKeyPressed(sf::Keyboard::RShift))
-        && m_pPaddle->getEnergy() > MinEnergy)
+        && m_pPaddle->getEnergy() > MinEnergyToBoost)
     {
         speed *= BoostMultiplier;
-
+        m_pPaddle->boost(deltaTime);
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)
         || sf::Keyboard::isKeyPressed(sf::Keyboard::W))

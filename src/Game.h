@@ -17,6 +17,7 @@ namespace sf { class Clock; }
 class Game : public sf::Drawable
 {
 public:
+	sf::Texture					ui_texture;
 
 	enum class State
 	{

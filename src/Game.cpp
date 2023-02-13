@@ -56,6 +56,12 @@ bool Game::initialise(sf::Vector2f pitchSize)
 		return false;
 	}
 
+	if (!ui_texture.loadFromFile(assetPath + "ui.png"))
+	{
+		std::cerr << "Unable to load ui textures" << std::endl;
+		return false;
+	}
+
 	return true;
 }
 

@@ -8,7 +8,7 @@
 int main()
 {
     srand(time(NULL));
-    sf::RenderWindow window(sf::VideoMode(1024, 768), "Hive Test");
+    sf::RenderWindow window(sf::VideoMode(1440, 1080), "Hive Supercell Pong");
     window.setKeyRepeatEnabled(false);
     
     std::unique_ptr<Game> pGame = std::make_unique<Game>();

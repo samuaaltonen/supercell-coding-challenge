@@ -12,3 +12,4 @@ Workflow:
 - Added multiple balls spawner. Ball spawning rate depends on how many balls are already on the map (to not get owerwhelmed too quickly).
 - Added keybind for ESC to close the game for conveniency
 - Noticed that there was no variance between games in ball spawning direction. srand random seed initializer was missing, added it.
+- Generated heart and energy battery assets with DALL-E and edited with Photoshop into same spritesheet
