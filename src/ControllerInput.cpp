@@ -16,11 +16,13 @@ ControllerInput::~ControllerInput()
 
 void ControllerInput::update(float deltaTime)
 {
-    if (m_movingUp)
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)
+        || sf::Keyboard::isKeyPressed(sf::Keyboard::W))
     {
         m_pPaddle->move(-PaddleMoveSpeed*deltaTime);
     }
-    else if (m_movingDown)
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)
+        || sf::Keyboard::isKeyPressed(sf::Keyboard::S))
     {
         m_pPaddle->move(PaddleMoveSpeed*deltaTime);
     }
@@ -28,24 +30,10 @@ void ControllerInput::update(float deltaTime)
 
 void ControllerInput::onKeyPressed(sf::Keyboard::Key key)
 {
-    if (key == sf::Keyboard::Up)
-    {
-        m_movingUp = true;
-    }
-    else if (key == sf::Keyboard::Down)
-    {
-        m_movingDown = true;
-    }
+    (void)key;
 }
 
 void ControllerInput::onKeyReleased(sf::Keyboard::Key key)
 {
-    if (key == sf::Keyboard::Up)
-    {
-        m_movingUp = false;
-    }
-    else if (key == sf::Keyboard::Down)
-    {
-        m_movingDown = false;
-    }
+    (void)key;
 }
