@@ -85,7 +85,7 @@ void Game::update(float deltaTime)
 	m_pPaddles[Side::RIGHT]->update(deltaTime);
 	m_controllers[Side::LEFT]->update(deltaTime);
 	m_controllers[Side::RIGHT]->update(deltaTime);
-	for (Ball& ball : m_Balls)
+	for (Ball& ball : balls)
 	{
 		ball.update(deltaTime);
 	}
@@ -102,7 +102,7 @@ void Game::draw(sf::RenderTarget& target, sf::RenderStates states) const
 	target.draw(*m_pPitch.get());
 	target.draw(*m_pPaddles[Side::LEFT].get());
 	target.draw(*m_pPaddles[Side::RIGHT].get());
-	for (const Ball& ball : m_Balls)
+	for (const Ball& ball : balls)
 	{
 		ball.draw(target, states);
 	}
@@ -145,18 +145,18 @@ void Game::onKeyReleased(sf::Keyboard::Key key)
 */
 void Game::_spawnBalls(float deltaTime)
 {
-	if (m_Balls.size() >= MaxBalls)
+	if (balls.size() >= MaxBalls)
 		return;
 
 	m_spawnTimer += deltaTime;
-	if (m_spawnTimer < BallRelativeSpawnTime * (float)(m_Balls.size() + 1))
+	if (m_spawnTimer < BallRelativeSpawnTime * (float)(balls.size() + 1))
 		return;
 
 	Ball    ball(this);
 
 	ball.initialise();
 	ball.fireFromCenter();
-	m_Balls.push_back(ball);
+	balls.push_back(ball);
 	m_spawnTimer = 0.f;
 }
 
@@ -167,16 +167,16 @@ void Game::_clearScoredBalls()
 {
 	while (true)
 	{
-		auto iterator = std::find_if(m_Balls.begin(), m_Balls.end(), [](const Ball& ball) {
+		auto iterator = std::find_if(balls.begin(), balls.end(), [](const Ball& ball) {
 			return ball.isMissed();
 			});
 
 		// Stop clearing when iterator returns end
-		if (iterator == m_Balls.end())
+		if (iterator == balls.end())
 			return;
 
 		// Erase the ball
-		m_Balls.erase(iterator);
+		balls.erase(iterator);
 	}
 }
 

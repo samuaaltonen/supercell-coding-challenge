@@ -27,11 +27,11 @@ void ControllerInput::update(float deltaTime)
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)
         || sf::Keyboard::isKeyPressed(sf::Keyboard::W))
     {
-        m_pPaddle->move(-speed *deltaTime);
+        m_pPaddle->move(-speed * deltaTime);
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)
         || sf::Keyboard::isKeyPressed(sf::Keyboard::S))
     {
-        m_pPaddle->move(speed *deltaTime);
+        m_pPaddle->move(speed * deltaTime);
     }
 }

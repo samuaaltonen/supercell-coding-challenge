@@ -39,6 +39,8 @@ constexpr float ScorePerGoal = 1000.f;
  */
 constexpr float RenderScoreIncreaseRate = 2.f;
 
+constexpr int AIExhaustion = 3000; // Maximum collision calculations the AI will do in a single update per ball.
+
 enum Side
 {
     LEFT = 0,

@@ -17,7 +17,8 @@ namespace sf { class Clock; }
 class Game : public sf::Drawable
 {
 public:
-	sf::Texture		ui_texture;
+	std::vector<Ball>		balls;
+	sf::Texture				ui_texture;
 
 	enum class State
 	{
@@ -45,7 +46,6 @@ public:
 	void			changeState(Game::State state);
 
 private:
-	std::vector<Ball>			m_Balls;
 	float						m_spawnTimer;
 
 	std::unique_ptr<Pitch>		m_pPitch;
