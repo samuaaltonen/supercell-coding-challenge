@@ -5,6 +5,7 @@ Ideas:
 - Balls have collisions
 - With many balls it is easy to lose after small mistake, change losing mechanism to be based on "health" instead. Draw health bar.
 - Colorful effects, textures, music, ball sounds
+- Add predictive AI that can calculate most threatening ball based on time to collision, speed and paddle position.
 
 Workflow:
 - Fixed a bug where players paddle always goes down. Also made it so that players paddle doesnt automatically move for better control.
