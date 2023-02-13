@@ -66,4 +66,5 @@ private:
 
 	void _spawnBalls(float deltaTime);
 	void _clearScoredBalls();
+	void _handleRepeatableKeys(float deltaTime);
 };

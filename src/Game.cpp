@@ -78,6 +78,8 @@ bool Game::initialise(sf::Vector2f pitchSize)
 
 void Game::update(float deltaTime)
 {
+	audio.playMusic();
+	_handleRepeatableKeys(deltaTime);
 	switch (m_state)
 	{
 		case State::MENU:
@@ -105,8 +107,6 @@ void Game::update(float deltaTime)
 		m_renderScore[Side::LEFT] += RenderScoreIncreaseRate * deltaTime * (m_score[Side::LEFT] - m_renderScore[Side::LEFT]);
 	if (m_score[Side::RIGHT] - m_renderScore[Side::RIGHT] >= 0.f)
 		m_renderScore[Side::RIGHT] += RenderScoreIncreaseRate * deltaTime * (m_score[Side::RIGHT] - m_renderScore[Side::RIGHT]);
-
-	audio.playMusic();
 }
 
 void Game::draw(sf::RenderTarget& target, sf::RenderStates states) const
@@ -151,8 +151,33 @@ void Game::onKeyReleased(sf::Keyboard::Key key)
 {
 	m_controllers[Side::LEFT]->onKeyReleased(key);
 	m_controllers[Side::RIGHT]->onKeyReleased(key);
+	if (key == sf::Keyboard::Space
+		|| (key == sf::Keyboard::Tab && m_state == State::MENU))
+		m_state = State::GAME;
+	if (key == sf::Keyboard::Tab && m_state == State::GAME)
+		m_state = State::MENU;
 	if (key == sf::Keyboard::Escape)
 		exit(EXIT_SUCCESS);
+}
+
+void Game::_handleRepeatableKeys(float deltaTime)
+{
+	float	volume = audio.getVolume();
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::PageUp)
+		|| sf::Keyboard::isKeyPressed(sf::Keyboard::Add)
+		|| sf::Keyboard::isKeyPressed(sf::Keyboard::I))
+		volume += VolumeChangeRate * deltaTime;
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::PageDown)
+		|| sf::Keyboard::isKeyPressed(sf::Keyboard::Subtract)
+		|| sf::Keyboard::isKeyPressed(sf::Keyboard::K))
+		volume -= VolumeChangeRate * deltaTime;
+
+	if (volume < 0.f)
+		volume = 0.f;
+	if (volume > 100.f)
+		volume = 100.f;
+	audio.setVolume(volume);
 }
 
 /**

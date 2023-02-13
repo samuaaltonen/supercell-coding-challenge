@@ -14,7 +14,7 @@ Menu::~Menu()
 bool	Menu::initialise()
 {
 	std::string			assetPath = Resources::getAssetPath();
-    const sf::Vector2f	pitchSize = m_pGame->getPitch()->getPitchSize();
+	const sf::Vector2f	pitchSize = m_pGame->getPitch()->getPitchSize();
 
 	if (!m_bgTexture.loadFromFile(assetPath + "background.png"))
 		exit(NULL);
@@ -22,9 +22,9 @@ bool	Menu::initialise()
 	m_bg.setSize(pitchSize);
 	m_bg.setTextureRect(sf::IntRect(0, 0, m_bgTexture.getSize().x, m_bgTexture.getSize().y));
 
-	m_shadow.setSize(sf::Vector2f(500.f, 600.f));
+	m_shadow.setSize(sf::Vector2f(600.f, 600.f));
 	m_shadow.setFillColor(sf::Color(0, 0, 0, 127));
-	m_shadow.setPosition(sf::Vector2f((float)((pitchSize.x - 500) / 2), 50.f));
+	m_shadow.setPosition(sf::Vector2f((float)((pitchSize.x - 600) / 2), 150.f));
 	return true;
 }
 
@@ -35,15 +35,15 @@ void Menu::update(float deltaTime)
 
 void Menu::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
-	static const char *control_strings[8] = {
+	static const char* control_strings[8] = {
 		"Controls:",
-		"[Arrow Up / W]          Move paddle up",
+		"[Arrow Up / W]         Move paddle up",
 		"[Arrow Down / S]       Move paddle down",
 		"[Tab]                  Display menu",
 		"[Tab / Space]          Start",
 		"[+ / PageUp / i]       Volume up",
 		"[- / PageDown / k]     Volume down",
-		"[Esc]					Exit"
+		"[Esc]                  Exit"
 	};
 	const sf::Vector2f	pitchSize = m_pGame->getPitch()->getPitchSize();
 	sf::Text			text;
@@ -55,15 +55,21 @@ void Menu::draw(sf::RenderTarget& target, sf::RenderStates states) const
 	text.setString("WELCOME");
 	text.setCharacterSize(48);
 	text.setFillColor(sf::Color::White);
-	text.setPosition(sf::Vector2f((float)((pitchSize.x - 200) / 2), 60.f));
+	text.setPosition(sf::Vector2f((float)((pitchSize.x - 140) / 2), 160.f));
 	target.draw(text);
 
-	text.setCharacterSize(24);
+	text.setCharacterSize(32);
 	text.setFillColor(sf::Color::White);
-	for (int i = 0; i < 8; i++)
+	int i = -1;
+	while (++i < 8)
 	{
 		text.setString(control_strings[i]);
-		text.setPosition(sf::Vector2f((float)((pitchSize.x - 400) / 2), 150.f + i * 40.f));
+		text.setPosition(sf::Vector2f((float)((pitchSize.x - 500) / 2), 250.f + i * 40.f));
 		target.draw(text);
 	}
+
+	text.setString("Current volume: " + std::to_string((int)m_pGame->audio.getVolume()) + " / 100");
+	text.setFillColor(sf::Color::Green);
+	text.setPosition(sf::Vector2f((float)((pitchSize.x - 500) / 2), 280.f + i * 40.f));
+	target.draw(text);
 }
