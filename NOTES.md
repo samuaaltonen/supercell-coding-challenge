@@ -18,3 +18,6 @@ Workflow:
 - Added taking damage if other side scores a goal
 - Modified score to be given based on successfull defends instead. Score amount is proportional to ball velocity.
 - Added rendering score which targets actual score every frame (to achieve running score count). Change depends on distance to actual score and score change rate to get accelerating score increase effect.
+- Added smarter AI which calculates balls intersection points to goal line and moves accordingly using boost only when necessary.
+- Noticed that the AI is now way too smart and kinda impossible to defeat. Need to do difficulty slider.
+- Added sound effects. Using free soundpack by GameSupplyGuy, added link/credits to CREDITS.md.

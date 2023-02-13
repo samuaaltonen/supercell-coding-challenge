@@ -12,6 +12,7 @@ class Paddle;
 class Ball;
 class Game;
 class Controller;
+class Audio;
 namespace sf { class Clock; }
 
 class Game : public sf::Drawable
@@ -19,6 +20,7 @@ class Game : public sf::Drawable
 public:
 	std::vector<Ball>		balls;
 	sf::Texture				ui_texture;
+	std::unique_ptr<Audio>	pAudio;
 
 	enum class State
 	{

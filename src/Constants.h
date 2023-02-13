@@ -41,8 +41,16 @@ constexpr float RenderScoreIncreaseRate = 2.f;
 
 constexpr int AIExhaustion = 3000; // Maximum collision calculations the AI will do in a single update per ball.
 
+constexpr float DefaultVolume = 100.f;
+
 enum Side
 {
     LEFT = 0,
     RIGHT
+};
+
+enum Sounds
+{
+	SOUND_SCORE,
+	SOUND_TAKE_DAMAGE
 };

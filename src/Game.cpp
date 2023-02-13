@@ -13,6 +13,7 @@
 
 Game::Game()
 	: m_pPitch(std::make_unique<Pitch>(this))
+	, pAudio(std::make_unique<Audio>())
 	, m_state(State::MENU)
 	, m_pClock(std::make_unique<sf::Clock>())
 {
