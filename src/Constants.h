@@ -11,7 +11,13 @@ constexpr std::size_t MaxBalls = 10;
 constexpr float BallRelativeSpawnTime = 1.f;
 
 constexpr float MinFiringSpeed = 150.f;
-constexpr float MaxFiringSpeed = 600.f;
+constexpr float MaxFiringSpeed = 500.f;
+
+constexpr float BoostMultiplier = 2.f;
+constexpr float MinEnergy = 15.f;
+constexpr float MaxEnergy = 100.f;
+constexpr float EnergyRegen = 30.f; // regen per second
+constexpr float EnergyUsage = 80.f; // energy usage per second when using
 
 enum Side
 {

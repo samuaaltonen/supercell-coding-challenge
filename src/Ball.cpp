@@ -11,8 +11,8 @@
 
 Ball::Ball(Game* pGame)
     : m_pGame(pGame)
+    , m_scored(false)
 {
-    
 }
 
 Ball::~Ball()
@@ -22,7 +22,6 @@ Ball::~Ball()
 
 bool Ball::initialise()
 {
-    m_scored = false;
     return true;
 }
 
@@ -83,24 +82,31 @@ void Ball::update(float deltaTime)
 void Ball::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
     sf::CircleShape circle(BallRadius, BallPoints);
-    circle.setFillColor(sf::Color::White);
+    circle.setFillColor(m_color);
     circle.setPosition(getPosition()-sf::Vector2f(BallRadius, BallRadius));
     target.draw(circle);
 }
 
 void Ball::fireFromCenter()
 {
+    static const sf::Color colors[4] = {
+        sf::Color::Green,
+        sf::Color::Cyan,
+        sf::Color::Yellow,
+        sf::Color::Red
+    };
+
     sf::Vector2f pitchSize = m_pGame->getPitch()->getPitchSize();
     setPosition(pitchSize*0.5f);
     
-    // choose random direction
+    // Random direction, speed and color
     float   random = (rand() % 1000) * 0.001f;
     float   randomAngle = random * 3.14159265359 * 2.f;
     float   speed = random * (MaxFiringSpeed - MinFiringSpeed) + MinFiringSpeed;
 
-    printf("%f %f %f\n", random, randomAngle, speed);
     m_velocity.x = sinf(randomAngle) * speed;
     m_velocity.y = cosf(randomAngle) * speed;
+    m_color = colors[(int)(random * 4.f) % 4];
 }
 
 bool Ball::isScored() const

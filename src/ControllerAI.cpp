@@ -9,8 +9,8 @@
 
 ControllerAI::ControllerAI(Game* pGame, Paddle* pPaddle)
     : Controller(pGame, pPaddle)
+    , m_targetLocationY(0.f)
 {
-    
 }
 
 ControllerAI::~ControllerAI()

@@ -8,8 +8,9 @@
 
 Paddle::Paddle(Game* pGame)
     : m_pGame(pGame)
+    , m_side(Side::LEFT)
+    , m_energy(MaxEnergy)
 {
-    
 }
 
 Paddle::~Paddle()
@@ -30,7 +31,7 @@ bool Paddle::initialise(Side side)
 
 void Paddle::update(float deltaTime)
 {
-
+    m_energy += deltaTime * EnergyRegen;
 }
 
 void Paddle::draw(sf::RenderTarget &target, sf::RenderStates states) const
@@ -49,6 +50,18 @@ sf::FloatRect Paddle::getRect() const
 float Paddle::getPaddleHeight() const
 {
     return PaddleHeight;
+}
+
+float Paddle::getEnergy() const
+{
+    return m_energy;
+}
+
+void Paddle::useEnergy(float deltaTime)
+{
+    m_energy -= deltaTime * EnergyUsage;
+    if (m_energy <= 0.f)
+        m_energy = 0.f;
 }
 
 void Paddle::move(float yDelta)

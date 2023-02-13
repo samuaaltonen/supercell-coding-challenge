@@ -4,7 +4,6 @@
 
 ControllerInput::ControllerInput(Game* pGame, Paddle* pPaddle)
     : Controller(pGame, pPaddle)
-    , m_movingUp(false)
 {
     
 }
@@ -16,24 +15,23 @@ ControllerInput::~ControllerInput()
 
 void ControllerInput::update(float deltaTime)
 {
+    float   speed = PaddleMoveSpeed;
+
+    if ((sf::Keyboard::isKeyPressed(sf::Keyboard::LShift)
+        || sf::Keyboard::isKeyPressed(sf::Keyboard::RShift))
+        && m_pPaddle->getEnergy() > MinEnergy)
+    {
+        speed *= BoostMultiplier;
+
+    }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)
         || sf::Keyboard::isKeyPressed(sf::Keyboard::W))
     {
-        m_pPaddle->move(-PaddleMoveSpeed*deltaTime);
+        m_pPaddle->move(-speed *deltaTime);
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)
         || sf::Keyboard::isKeyPressed(sf::Keyboard::S))
     {
-        m_pPaddle->move(PaddleMoveSpeed*deltaTime);
+        m_pPaddle->move(speed *deltaTime);
     }
-}
-
-void ControllerInput::onKeyPressed(sf::Keyboard::Key key)
-{
-    (void)key;
-}
-
-void ControllerInput::onKeyReleased(sf::Keyboard::Key key)
-{
-    (void)key;
 }

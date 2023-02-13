@@ -2,6 +2,7 @@
 
 #include <SFML/Graphics/Drawable.hpp>
 #include <SFML/Graphics/Transformable.hpp>
+#include <SFML/Graphics/Color.hpp>
 
 class Game;
 
@@ -22,4 +23,5 @@ private:
     Game*           m_pGame;
     sf::Vector2f    m_velocity;
     bool            m_scored;
+    sf::Color       m_color;
 };
