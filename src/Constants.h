@@ -7,8 +7,8 @@ constexpr float PaddleHeight = 160.f;
 constexpr float PaddleOffsetFromEdge = 20.f;
 constexpr float PaddleMoveSpeed = 300.f;
 
-constexpr std::size_t MaxBalls = 10;
-constexpr float BallRelativeSpawnTime = 1.f;
+constexpr std::size_t MaxBalls = 30;
+constexpr float BallRelativeSpawnTime = 0.5f;
 
 constexpr float MinFiringSpeed = 150.f;
 constexpr float MaxFiringSpeed = 500.f;
@@ -31,6 +31,8 @@ constexpr float EnergyIconOffset = 360.f;
 constexpr float EnergyWidth = 20.f;
 constexpr float EnergyHeight = 31.f;
 
+constexpr float ScorePerSpeed = 0.25f;
+constexpr float ScorePerGoal = 1000.f;
 /**
  * Rate per score per second (i.e. if score change is +10, rate starts with
  * 20 score / second and then reduces down to 0 when reaching the actual score.

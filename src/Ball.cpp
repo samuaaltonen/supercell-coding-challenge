@@ -61,10 +61,10 @@ void Ball::update(float deltaTime)
     const bool intersects = VecLength(paddleToBall) < BallRadius;
     if (intersects)
     {
-        m_velocity.x = sideToTest == Side::LEFT ? fabs(m_velocity.x) : -fabs(m_velocity.x);
-
         // successfull defend, add score
-        m_pGame->addScore(sideToTest);
+        m_pGame->addScore(sideToTest, VecLength(m_velocity) * ScorePerSpeed);
+        
+        m_velocity.x = sideToTest == Side::LEFT ? fabs(m_velocity.x) : -fabs(m_velocity.x);
     }
     
     // set the position and check for a goal
@@ -75,6 +75,7 @@ void Ball::update(float deltaTime)
     {
         pPaddleToTest->takeDamage();
         m_missed = true;
+        m_pGame->addScore(sideToTest == Side::LEFT ? Side::RIGHT : Side::LEFT, ScorePerGoal);
     }
 }
 

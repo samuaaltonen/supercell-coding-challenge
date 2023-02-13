@@ -17,4 +17,4 @@ Workflow:
 - Added health and energy bars for both sides
 - Added taking damage if other side scores a goal
 - Modified score to be given based on successfull defends instead. Score amount is proportional to ball velocity.
-- Added rendering score which targets actual score every frame (to achieve running score count). Changes depending on distance to actual score and score change rate to get accelerating score increase effect.
+- Added rendering score which targets actual score every frame (to achieve running score count). Change depends on distance to actual score and score change rate to get accelerating score increase effect.

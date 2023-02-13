@@ -33,7 +33,7 @@ public:
 	void			update(float deltaTime);
 	void			draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
-	void			addScore(Side side);
+	void			addScore(Side side, float amount);
 
 	State			getState() const { return m_state; }
 	Paddle*			getPaddle(Side side) { return m_pPaddles[(int)side].get(); }
@@ -54,8 +54,8 @@ private:
 
 	std::unique_ptr<Paddle>		m_pPaddles[2];
 	std::unique_ptr<Controller>	m_controllers[2];
-	int							m_score[2];
-	int							m_renderScore[2];
+	float						m_score[2];
+	float						m_renderScore[2];
 
 	sf::Font					m_font;
 

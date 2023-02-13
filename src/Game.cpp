@@ -22,11 +22,11 @@ Game::Game()
 	m_controllers[Side::LEFT] = std::make_unique<ControllerInput>(this, m_pPaddles[0].get());
 	m_controllers[Side::RIGHT] = std::make_unique<ControllerAI>(this, m_pPaddles[1].get());
 
-	m_score[Side::LEFT] = 0;
-	m_score[Side::RIGHT] = 0;
+	m_score[Side::LEFT] = 0.f;
+	m_score[Side::RIGHT] = 0.f;
 
-	m_renderScore[Side::LEFT] = 0;
-	m_renderScore[Side::RIGHT] = 0;
+	m_renderScore[Side::LEFT] = 0.f;
+	m_renderScore[Side::RIGHT] = 0.f;
 
 	m_spawnTimer = 0.f;
 }
@@ -89,6 +89,12 @@ void Game::update(float deltaTime)
 	{
 		ball.update(deltaTime);
 	}
+
+	// Update rendering scores
+	if (m_score[Side::LEFT] - m_renderScore[Side::LEFT] >= 0.f)
+		m_renderScore[Side::LEFT] += RenderScoreIncreaseRate * deltaTime * (m_score[Side::LEFT] - m_renderScore[Side::LEFT]);
+	if (m_score[Side::RIGHT] - m_renderScore[Side::RIGHT] >= 0.f)
+		m_renderScore[Side::RIGHT] += RenderScoreIncreaseRate * deltaTime * (m_score[Side::RIGHT] - m_renderScore[Side::RIGHT]);
 }
 
 void Game::draw(sf::RenderTarget& target, sf::RenderStates states) const
@@ -104,20 +110,20 @@ void Game::draw(sf::RenderTarget& target, sf::RenderStates states) const
 	// draw the score
 	sf::Text leftScore;
 	leftScore.setFont(m_font);
-	leftScore.setString(std::to_string(m_score[Side::LEFT]));
+	leftScore.setString(std::to_string((int)m_renderScore[Side::LEFT]));
 	leftScore.setFillColor(sf::Color::White);
 	leftScore.setPosition(target.getSize().x * 0.25f, 10.f);
 	leftScore.setStyle(sf::Text::Bold);
 	target.draw(leftScore);
 
-	leftScore.setString(std::to_string(m_score[Side::RIGHT]));
+	leftScore.setString(std::to_string((int)m_renderScore[Side::RIGHT]));
 	leftScore.setPosition(target.getSize().x * 0.75f, 10.f);
 	target.draw(leftScore);
 }
 
-void Game::addScore(Side side)
+void Game::addScore(Side side, float amount)
 {
-	m_score[side]++;
+	m_score[side] += amount;
 }
 
 void Game::onKeyPressed(sf::Keyboard::Key key)
@@ -168,7 +174,7 @@ void Game::_clearScoredBalls()
 		// Stop clearing when iterator returns end
 		if (iterator == m_Balls.end())
 			return;
-		
+
 		// Erase the ball
 		m_Balls.erase(iterator);
 	}
