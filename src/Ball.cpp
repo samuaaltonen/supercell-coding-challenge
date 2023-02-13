@@ -11,7 +11,7 @@
 
 Ball::Ball(Game* pGame)
     : m_pGame(pGame)
-    , m_scored(false)
+    , m_missed(false)
 {
 }
 
@@ -51,7 +51,7 @@ void Ball::update(float deltaTime)
     
     // check ball against paddles
     const Side sideToTest = (newPosition.x < pitchSize.x*0.5f) ? Side::LEFT : Side::RIGHT;
-    const Paddle* pPaddleToTest = m_pGame->getPaddle(sideToTest);
+    Paddle* pPaddleToTest = m_pGame->getPaddle(sideToTest);
     const sf::FloatRect paddleRect = pPaddleToTest->getRect();
     
     const sf::Vector2f closestPointOnPaddle(
@@ -62,20 +62,19 @@ void Ball::update(float deltaTime)
     if (intersects)
     {
         m_velocity.x = sideToTest == Side::LEFT ? fabs(m_velocity.x) : -fabs(m_velocity.x);
+
+        // successfull defend, add score
+        m_pGame->addScore(sideToTest);
     }
     
     // set the position and check for a goal
     setPosition(newPosition);
     
-    if (newPosition.x+BallRadius < 0.f)
+    if (newPosition.x+BallRadius < 0.f
+        || newPosition.x - BallRadius > pitchSize.x)
     {
-        m_pGame->scoreGoal(Side::RIGHT);
-        m_scored = true;
-    }
-    else if (newPosition.x-BallRadius > pitchSize.x)
-    {
-        m_pGame->scoreGoal(Side::LEFT);
-        m_scored = true;
+        pPaddleToTest->takeDamage();
+        m_missed = true;
     }
 }
 
@@ -107,9 +106,4 @@ void Ball::fireFromCenter()
     m_velocity.x = sinf(randomAngle) * speed;
     m_velocity.y = cosf(randomAngle) * speed;
     m_color = colors[(int)(random * 4.f) % 4];
-}
-
-bool Ball::isScored() const
-{
-    return m_scored;
 }

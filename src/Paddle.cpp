@@ -10,7 +10,7 @@ Paddle::Paddle(Game* pGame)
     : m_pGame(pGame)
     , m_side(Side::LEFT)
     , m_energy(MaxEnergy)
-    , m_health(DefaultHealth)
+    , m_health(MaxHealth)
     , m_sinceLastBoost(0.f)
 {
 }
@@ -58,7 +58,7 @@ void Paddle::draw(sf::RenderTarget &target, sf::RenderStates states) const
     healthIcon.setTexture(&m_pGame->ui_texture);
     healthIcon.setTextureRect(sf::IntRect(0, 0, (int)HeartWidth, (int)HeartHeight));
 
-    for (int i = 0; i < (int)(m_health / (DefaultHealth / HeartCount)); i++)
+    for (int i = 0; i < m_health; i++)
     {
         healthIcon.setPosition(sf::Vector2f(
             UiMargin + i * (HeartWidth + UiGap) + ((m_side == Side::LEFT) ? 0.f : pitchSize.x / 2),
@@ -112,4 +112,11 @@ void Paddle::move(float yDelta)
     position.y = std::clamp(position.y, 0.f, pitchSize.y-PaddleHeight);
     
     setPosition(position);
+}
+
+void Paddle::takeDamage()
+{
+    m_health--;
+    if (m_health <= 0)
+        m_pGame->changeState(Game::State::GAMEOVER);
 }

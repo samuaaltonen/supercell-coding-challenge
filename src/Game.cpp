@@ -13,7 +13,7 @@
 
 Game::Game()
 	: m_pPitch(std::make_unique<Pitch>(this))
-	, m_state(State::WAITING)
+	, m_state(State::MENU)
 	, m_pClock(std::make_unique<sf::Clock>())
 {
 	m_pPaddles[Side::LEFT] = std::make_unique<Paddle>(this);
@@ -24,6 +24,9 @@ Game::Game()
 
 	m_score[Side::LEFT] = 0;
 	m_score[Side::RIGHT] = 0;
+
+	m_renderScore[Side::LEFT] = 0;
+	m_renderScore[Side::RIGHT] = 0;
 
 	m_spawnTimer = 0.f;
 }
@@ -112,10 +115,8 @@ void Game::draw(sf::RenderTarget& target, sf::RenderStates states) const
 	target.draw(leftScore);
 }
 
-void Game::scoreGoal(Side side)
+void Game::addScore(Side side)
 {
-	m_state = State::WAITING;
-	m_pClock->restart();
 	m_score[side]++;
 }
 
@@ -161,7 +162,7 @@ void Game::_clearScoredBalls()
 	while (true)
 	{
 		auto iterator = std::find_if(m_Balls.begin(), m_Balls.end(), [](const Ball& ball) {
-			return ball.isScored();
+			return ball.isMissed();
 			});
 
 		// Stop clearing when iterator returns end
@@ -171,4 +172,9 @@ void Game::_clearScoredBalls()
 		// Erase the ball
 		m_Balls.erase(iterator);
 	}
+}
+
+void Game::changeState(Game::State state)
+{
+	m_state = state;
 }
