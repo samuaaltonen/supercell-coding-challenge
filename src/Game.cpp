@@ -25,6 +25,8 @@ Game::Game()
     
     m_score[Side::LEFT] = 0;
     m_score[Side::RIGHT] = 0;
+
+    m_spawnTimer = 0.f;
 }
 
 Game::~Game()
@@ -62,27 +64,25 @@ bool Game::initialise(sf::Vector2f pitchSize)
 
 void Game::update(float deltaTime)
 {
-    switch (m_state)
+    this->_spawnBalls(deltaTime);
+    /*switch (m_state)
     {
         case State::WAITING:
-        {
-            if (m_pClock->getElapsedTime().asSeconds() >= 3.f)
-            {
-                m_pBall->fireFromCenter();
-                m_state = State::ACTIVE;
-            }
-        }
             break;
             
         case State::ACTIVE:
             break;
-    }
+    }*/
     m_pPitch->update(deltaTime);
     m_pPaddles[Side::LEFT]->update(deltaTime);
     m_pPaddles[Side::RIGHT]->update(deltaTime);
     m_controllers[Side::LEFT]->update(deltaTime);
     m_controllers[Side::RIGHT]->update(deltaTime);
     m_pBall->update(deltaTime);
+    for (Ball& ball : m_Balls)
+    {
+        ball.update(deltaTime);
+    }
 }
 
 void Game::draw(sf::RenderTarget &target, sf::RenderStates states) const
@@ -91,6 +91,10 @@ void Game::draw(sf::RenderTarget &target, sf::RenderStates states) const
     target.draw(*m_pPaddles[Side::LEFT].get());
     target.draw(*m_pPaddles[Side::RIGHT].get());
     target.draw(*m_pBall.get());
+    for (const Ball& ball : m_Balls)
+    {
+        ball.draw(target, states);
+    }
     
     // draw the score
     sf::Text leftScore;
@@ -123,4 +127,21 @@ void Game::onKeyReleased(sf::Keyboard::Key key)
 {
     m_controllers[Side::LEFT]->onKeyReleased(key);
     m_controllers[Side::RIGHT]->onKeyReleased(key);
+}
+
+void Game::_spawnBalls(float deltaTime)
+{
+    if (m_Balls.size() >= MaxBalls)
+        return;
+
+    m_spawnTimer += deltaTime;
+    if (m_spawnTimer < BallRelativeSpawnTime * (float)(m_Balls.size() + 1))
+        return;
+
+    Ball    ball(this);
+
+    ball.initialise();
+    ball.fireFromCenter();
+    m_Balls.push_back(ball);
+    m_spawnTimer = 0.f;
 }

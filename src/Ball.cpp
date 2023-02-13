@@ -27,12 +27,6 @@ bool Ball::initialise()
 
 void Ball::update(float deltaTime)
 {
-    if (m_pGame->getState() == Game::State::WAITING)
-    {
-        // don't update the ball when we wait.
-        return;
-    }
-    
     // check ball against boundaries of the pitch
     sf::Vector2f lastPosition = getPosition();
     sf::Vector2f newPosition = lastPosition + m_velocity*deltaTime;
@@ -85,12 +79,6 @@ void Ball::update(float deltaTime)
 
 void Ball::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
-    if (m_pGame->getState() == Game::State::WAITING)
-    {
-        // don't render the ball when we wait.
-        return;
-    }
-    
     sf::CircleShape circle(BallRadius, BallPoints);
     circle.setFillColor(sf::Color::White);
     circle.setPosition(getPosition()-sf::Vector2f(BallRadius, BallRadius));
