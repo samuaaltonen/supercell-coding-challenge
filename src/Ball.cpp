@@ -22,6 +22,7 @@ Ball::~Ball()
 
 bool Ball::initialise()
 {
+    m_scored = false;
     return true;
 }
 
@@ -70,10 +71,12 @@ void Ball::update(float deltaTime)
     if (newPosition.x+BallRadius < 0.f)
     {
         m_pGame->scoreGoal(Side::RIGHT);
+        m_scored = true;
     }
     else if (newPosition.x-BallRadius > pitchSize.x)
     {
         m_pGame->scoreGoal(Side::LEFT);
+        m_scored = true;
     }
 }
 
@@ -91,7 +94,16 @@ void Ball::fireFromCenter()
     setPosition(pitchSize*0.5f);
     
     // choose random direction
-    float randomAngle = (rand() % 1000) * 0.001f * 3.14159265359 * 2.f;
-    m_velocity.x = sinf(randomAngle) * FiringSpeed;
-    m_velocity.y = cosf(randomAngle) * FiringSpeed;
+    float   random = (rand() % 1000) * 0.001f;
+    float   randomAngle = random * 3.14159265359 * 2.f;
+    float   speed = random * (MaxFiringSpeed - MinFiringSpeed) + MinFiringSpeed;
+
+    printf("%f %f %f\n", random, randomAngle, speed);
+    m_velocity.x = sinf(randomAngle) * speed;
+    m_velocity.y = cosf(randomAngle) * speed;
+}
+
+bool Ball::isScored() const
+{
+    return m_scored;
 }

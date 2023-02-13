@@ -16,8 +16,10 @@ public:
     void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
     
     void fireFromCenter();
+    bool isScored() const;
     
 private:
-    Game* m_pGame;
-    sf::Vector2f m_velocity;
+    Game*           m_pGame;
+    sf::Vector2f    m_velocity;
+    bool            m_scored;
 };

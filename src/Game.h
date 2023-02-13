@@ -45,7 +45,6 @@ private:
 	float						m_spawnTimer;
 
 	std::unique_ptr<Pitch>		m_pPitch;
-	std::unique_ptr<Ball>		m_pBall;
 	State						m_state;
 	std::unique_ptr<sf::Clock>	m_pClock;
 
@@ -56,4 +55,5 @@ private:
 	sf::Font					m_font;
 
 	void _spawnBalls(float deltaTime);
+	void _clearScoredBalls();
 };

@@ -7,6 +7,7 @@
 
 int main()
 {
+    srand(time(NULL));
     sf::RenderWindow window(sf::VideoMode(1024, 768), "Hive Test");
     window.setKeyRepeatEnabled(false);
     
