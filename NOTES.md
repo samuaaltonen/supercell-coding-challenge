@@ -23,3 +23,6 @@ Workflow:
 - Added background music. Using free music track by DavidKBD, added link/credits to CREDITS.md.
 - Added basic menu state. Generated menu background with DALL-E.
 - Added simple controls list to menu. Changed to use mono space font. Using free font "monogram" by datagoblin, added link/credits to CREDITS.md.
+- Added key press handling for repeatable keys (volume, difficulty). Control change rate is affected by deltatime.
+- Added AI difficulty dampener for AI paddle speed. At 100% difficulty there is no dampening. Below 25%, AI cannot use boost.
+- Added game over screen. Displays players score as green if they won.

@@ -45,6 +45,7 @@ public:
 	float			getDifficulty() const { return m_difficulty; }
 	Paddle*			getPaddle(Side side) { return m_pPaddles[(int)side].get(); }
 	const Pitch*	getPitch() const { return m_pPitch.get(); }
+	float			getScore(Side side);
 
 	void			onKeyPressed(sf::Keyboard::Key key);
 	void			onKeyReleased(sf::Keyboard::Key key);

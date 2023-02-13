@@ -35,6 +35,14 @@ void Menu::update(float deltaTime)
 
 void Menu::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
+	if (m_pGame->getState() == Game::State::GAMEOVER)
+		_drawGameOver(target, states);
+	else
+		_drawMenuItems(target, states);
+}
+
+void Menu::_drawMenuItems(sf::RenderTarget& target, sf::RenderStates states) const
+{
 	static const char* control_strings[10] = {
 		"Controls:",
 		"[Arrow Up / W]         Move paddle up",
@@ -83,5 +91,35 @@ void Menu::draw(sf::RenderTarget& target, sf::RenderStates states) const
 		255
 	));
 	text.setPosition(sf::Vector2f((float)((pitchSize.x - 500) / 2), 320.f + i * 40.f));
+	target.draw(text);
+}
+
+
+void Menu::_drawGameOver(sf::RenderTarget& target, sf::RenderStates states) const
+{
+	const sf::Vector2f	pitchSize = m_pGame->getPitch()->getPitchSize();
+	sf::Text			text;
+
+	target.draw(m_bg);
+	target.draw(m_shadow);
+
+	text.setFont(m_pGame->font);
+	text.setString("GAME OVER");
+	text.setCharacterSize(48);
+	text.setFillColor(sf::Color::White);
+	text.setPosition(sf::Vector2f((float)((pitchSize.x - 140) / 2), 160.f));
+	target.draw(text);
+
+	int playerScore = (int)m_pGame->getScore(Side::LEFT);
+	int aiScore = (int)m_pGame->getScore(Side::RIGHT);
+
+	text.setString("Your score:   " + std::to_string(playerScore));
+	text.setFillColor(playerScore > aiScore ? sf::Color::Green : sf::Color::Red);
+	text.setPosition(sf::Vector2f((float)((pitchSize.x - 500) / 2), 280.f));
+	target.draw(text);
+
+	text.setString("AI score:     " + std::to_string(aiScore));
+	text.setFillColor(sf::Color::White);
+	text.setPosition(sf::Vector2f((float)((pitchSize.x - 500) / 2), 320.f));
 	target.draw(text);
 }

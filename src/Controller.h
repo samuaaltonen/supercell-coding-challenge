@@ -13,8 +13,6 @@ public:
     
     virtual bool initialise(){ return true; };
     virtual void update(float deltaTime) {};
-    virtual void onKeyPressed(sf::Keyboard::Key key) {};
-    virtual void onKeyReleased(sf::Keyboard::Key key) {};
     
 protected:
     Game* m_pGame;

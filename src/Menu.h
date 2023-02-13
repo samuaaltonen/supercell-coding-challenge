@@ -25,4 +25,7 @@ private:
 	sf::Texture			m_bgTexture;
 	sf::RectangleShape	m_bg;
 	sf::RectangleShape	m_shadow;
+
+	void		_drawMenuItems(sf::RenderTarget& target, sf::RenderStates states) const;
+	void		_drawGameOver(sf::RenderTarget& target, sf::RenderStates states) const;
 };

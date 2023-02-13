@@ -80,16 +80,13 @@ bool Game::initialise(sf::Vector2f pitchSize)
 void Game::update(float deltaTime)
 {
 	audio.playMusic();
-	_handleRepeatableKeys(deltaTime);
-	switch (m_state)
-	{
-		case State::MENU:
-			m_pMenu->update(deltaTime);
-			return;
+	m_pMenu->update(deltaTime);
+	
+	if (m_state != State::GAMEOVER)
+		_handleRepeatableKeys(deltaTime);
 
-		case State::GAMEOVER:
-			return;
-	}
+	if (m_state != State::GAME)
+		return;
 
 	this->_spawnBalls(deltaTime);
 	this->_clearScoredBalls();
@@ -133,7 +130,7 @@ void Game::draw(sf::RenderTarget& target, sf::RenderStates states) const
 	leftScore.setPosition(target.getSize().x * 0.75f, 10.f);
 	target.draw(leftScore);
 
-	if (m_state == State::MENU)
+	if (m_state == State::MENU || m_state == State::GAMEOVER)
 		target.draw(*m_pMenu.get());
 }
 
@@ -144,14 +141,16 @@ void Game::addScore(Side side, float amount)
 
 void Game::onKeyPressed(sf::Keyboard::Key key)
 {
-	m_controllers[Side::LEFT]->onKeyPressed(key);
-	m_controllers[Side::RIGHT]->onKeyPressed(key);
 }
 
 void Game::onKeyReleased(sf::Keyboard::Key key)
 {
-	m_controllers[Side::LEFT]->onKeyReleased(key);
-	m_controllers[Side::RIGHT]->onKeyReleased(key);
+	if (m_state == State::GAMEOVER)
+	{
+		if (key == sf::Keyboard::Escape)
+			exit(EXIT_SUCCESS);
+		return;
+	}
 	if (key == sf::Keyboard::Space)
 		m_state = State::GAME;
 	if (key == sf::Keyboard::Escape && m_state == State::GAME)
@@ -232,4 +231,11 @@ void Game::_clearScoredBalls()
 void Game::changeState(Game::State state)
 {
 	m_state = state;
+}
+
+float Game::getScore(Side side)
+{
+	if (side == Side::LEFT)
+		return m_score[Side::LEFT];
+	return m_score[Side::RIGHT];
 }
