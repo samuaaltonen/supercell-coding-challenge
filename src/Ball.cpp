@@ -4,8 +4,8 @@
 #include "Game.h"
 #include "Pitch.h"
 #include "Paddle.h"
-#include "MathUtils.h"
 #include <math.h>
+#include "MathUtils.h"
 
 #include "Constants.h"
 

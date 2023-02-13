@@ -6,6 +6,7 @@
 #include "Pitch.h"
 #include "Paddle.h"
 #include "Ball.h"
+#include "MathUtils.h"
 
 ControllerAI::ControllerAI(Game* pGame, Paddle* pPaddle)
 	: Controller(pGame, pPaddle)
@@ -24,10 +25,28 @@ bool ControllerAI::initialise()
 
 void ControllerAI::update(float deltaTime)
 {
+	sf::Vector2f	paddleCenter = m_pPaddle->getPosition() + sf::Vector2f(0.f, PaddleHeight / 2.f);
 	sf::Vector2f	target;
 	float			collisionTime;
+	float			distance;
+	float			speed;
 
 	_determineTarget(&target, &collisionTime);
+	if (collisionTime < 0.f)
+		return;
+	distance = VecLength(target - paddleCenter);
+	speed = PaddleMoveSpeed;
+
+	// Check if we need to use boost
+	if (distance >= collisionTime * PaddleMoveSpeed)
+	{
+		speed *= BoostMultiplier;
+		m_pPaddle->boost(deltaTime);
+	}
+	if (target.y < paddleCenter.y)
+		m_pPaddle->move(-speed * deltaTime);
+	else
+		m_pPaddle->move(speed * deltaTime);
 }
 
 /**
@@ -40,8 +59,11 @@ void    ControllerAI::_determineTarget(sf::Vector2f* target, float* collisionTim
 	Line2f				pitchTop = { sf::Vector2f(0.f, 0.f), sf::Vector2f(pitchSize.x, 0.f)};
 	Line2f				pitchBottom = { sf::Vector2f(0.f, pitchSize.y), sf::Vector2f(pitchSize.x, pitchSize.y)};
 	sf::Vector2f		intersection;
-	Ball				*threat;
 
+	// Mark time as negative to know that there is no threat
+	*collisionTime = -1.f;
+
+	// Check balls
 	for (Ball& ball : m_pGame->balls)
 	{
 		if (ball.getVelocity().x <= 0.f)
@@ -54,7 +76,11 @@ void    ControllerAI::_determineTarget(sf::Vector2f* target, float* collisionTim
 		int		collisionCalculations = -1;
 		float	totalTravelTime = 0.f;
 
-		// Ping pong intersections from window top and bottom walls
+		/**
+		 * Ping pong intersections from window topand bottom walls. With luck there can
+		 * be a ball that has close to 0 horizontal velocity and therefore would ping
+		 * pong top/bottom very long, so we only loop until AIExhaustion.
+		 */
 		while ((intersection.y < 0.f || intersection.y > pitchSize.y)
 			&& ++collisionCalculations < AIExhaustion)
 		{
@@ -90,7 +116,11 @@ void    ControllerAI::_determineTarget(sf::Vector2f* target, float* collisionTim
 
 		// Add travel time (v = x / t => t = x / v)
 		totalTravelTime += _getTravelTime(ballStart, intersection, ball.getVelocity());
-		printf("%f\n", totalTravelTime);
+		if (*collisionTime < 0.f || (*collisionTime > 0.f && totalTravelTime < *collisionTime))
+		{
+			*collisionTime = totalTravelTime;
+			*target = intersection;
+		}
 	}
 }
 
@@ -124,8 +154,5 @@ bool	ControllerAI::_lineIntersection(ControllerAI::Line2f a, ControllerAI::Line2
 
 float	ControllerAI::_getTravelTime(sf::Vector2f a, sf::Vector2f b, sf::Vector2f velocity)
 {
-	sf::Vector2f	distance = b - a;
-
-	return (sqrtf(distance.x * distance.x + distance.y * distance.y)
-		/ sqrtf(velocity.x * velocity.x + velocity.y * velocity.y));
+	return (VecLength(b - a) / VecLength(velocity));
 }
