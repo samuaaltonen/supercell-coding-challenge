@@ -63,6 +63,9 @@ void Ball::update(float deltaTime)
     {
         // successfull defend, add score
         m_pGame->addScore(sideToTest, VecLength(m_velocity) * ScorePerSpeed);
+
+        if (sideToTest == Side::LEFT)
+            m_pGame->audio.playSound(Sounds::SOUND_SCORE);
         
         m_velocity.x = sideToTest == Side::LEFT ? fabs(m_velocity.x) : -fabs(m_velocity.x);
     }
@@ -76,6 +79,8 @@ void Ball::update(float deltaTime)
         pPaddleToTest->takeDamage();
         m_missed = true;
         m_pGame->addScore(sideToTest == Side::LEFT ? Side::RIGHT : Side::LEFT, ScorePerGoal);
+        if (sideToTest == Side::RIGHT)
+            m_pGame->audio.playSound(Sounds::SOUND_GOAL);
     }
 }
 

@@ -6,6 +6,7 @@
 #include "Constants.h"
 
 class Game;
+class Audio;
 
 
 class Paddle : public sf::Drawable, public sf::Transformable

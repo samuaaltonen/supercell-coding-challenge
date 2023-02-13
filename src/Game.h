@@ -6,6 +6,7 @@
 #include <memory>
 #include <vector>
 #include "Constants.h"
+#include "Audio.h"
 
 class Pitch;
 class Paddle;
@@ -20,7 +21,7 @@ class Game : public sf::Drawable
 public:
 	std::vector<Ball>		balls;
 	sf::Texture				ui_texture;
-	std::unique_ptr<Audio>	pAudio;
+	Audio					audio;
 
 	enum class State
 	{

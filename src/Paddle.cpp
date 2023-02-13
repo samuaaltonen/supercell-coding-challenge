@@ -119,4 +119,6 @@ void Paddle::takeDamage()
     m_health--;
     if (m_health <= 0)
         m_pGame->changeState(Game::State::GAMEOVER);
+    if (m_side == Side::LEFT)
+        m_pGame->audio.playSound(Sounds::SOUND_TAKE_DAMAGE);
 }

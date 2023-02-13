@@ -13,7 +13,6 @@
 
 Game::Game()
 	: m_pPitch(std::make_unique<Pitch>(this))
-	, pAudio(std::make_unique<Audio>())
 	, m_state(State::MENU)
 	, m_pClock(std::make_unique<sf::Clock>())
 {
@@ -49,6 +48,9 @@ bool Game::initialise(sf::Vector2f pitchSize)
 	if (!m_controllers[Side::LEFT]->initialise())
 		return false;
 	if (!m_controllers[Side::RIGHT]->initialise())
+		return false;
+
+	if (!audio.initialise())
 		return false;
 
 	m_pClock->restart();

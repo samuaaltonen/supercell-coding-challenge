@@ -7,6 +7,8 @@ class Audio
 {
 public:
 	Audio();
+	~Audio();
+
 	bool	initialise();
 	void	playMusic();
 	void	playSound(Sounds sound);
@@ -18,6 +20,8 @@ private:
 	sf::Music			m_music;
 	sf::SoundBuffer		m_bufferScore;
 	sf::SoundBuffer		m_bufferTakeDamage;
+	sf::SoundBuffer		m_bufferGoal;
 	sf::Sound			m_soundScore;
 	sf::Sound			m_soundTakeDamage;
+	sf::Sound			m_soundGoal;
 };
