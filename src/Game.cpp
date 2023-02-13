@@ -68,6 +68,8 @@ bool Game::initialise(sf::Vector2f pitchSize)
 		return false;
 	}
 
+	audio.playMusic();
+
 	return true;
 }
 

@@ -15,9 +15,9 @@ bool	Audio::initialise()
 {
 	std::string assetPath = Resources::getAssetPath();
 
-	/*if (!m_music.openFromFile(assetPath + "music.wav"))
+	if (!m_music.openFromFile(assetPath + "BinaryChaos.ogg"))
 		return false;
-	m_music.setVolume(m_volume);*/
+	m_music.setVolume(m_volume);
 	if (!m_bufferScore.loadFromFile(assetPath + "GetAPowerUp.wav"))
 		return false;
 	if (!m_bufferTakeDamage.loadFromFile(assetPath + "ShotMeDown.wav"))
