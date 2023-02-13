@@ -151,12 +151,11 @@ void Game::onKeyReleased(sf::Keyboard::Key key)
 {
 	m_controllers[Side::LEFT]->onKeyReleased(key);
 	m_controllers[Side::RIGHT]->onKeyReleased(key);
-	if (key == sf::Keyboard::Space
-		|| (key == sf::Keyboard::Tab && m_state == State::MENU))
+	if (key == sf::Keyboard::Space)
 		m_state = State::GAME;
-	if (key == sf::Keyboard::Tab && m_state == State::GAME)
+	if (key == sf::Keyboard::Escape && m_state == State::GAME)
 		m_state = State::MENU;
-	if (key == sf::Keyboard::Escape)
+	else if (key == sf::Keyboard::Escape && m_state == State::MENU)
 		exit(EXIT_SUCCESS);
 }
 

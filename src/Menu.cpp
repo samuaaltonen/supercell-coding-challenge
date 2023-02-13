@@ -39,11 +39,11 @@ void Menu::draw(sf::RenderTarget& target, sf::RenderStates states) const
 		"Controls:",
 		"[Arrow Up / W]         Move paddle up",
 		"[Arrow Down / S]       Move paddle down",
-		"[Tab]                  Display menu",
-		"[Tab / Space]          Start",
+		"[Esc]                  Display menu",
+		"[Space]                Start / Continue",
 		"[+ / PageUp / i]       Volume up",
 		"[- / PageDown / k]     Volume down",
-		"[Esc]                  Exit"
+		"[Esc in menu]          Exit"
 	};
 	const sf::Vector2f	pitchSize = m_pGame->getPitch()->getPitchSize();
 	sf::Text			text;

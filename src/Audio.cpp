@@ -16,7 +16,7 @@ bool	Audio::initialise()
 
 	if (!m_music.openFromFile(assetPath + "BinaryChaos.ogg"))
 		return false;
-	m_music.setVolume(m_volume);
+	m_music.setVolume(m_volume / 2.f);
 	m_music.setLoop(true);
 	if (!m_bufferScore.loadFromFile(assetPath + "GetAPowerUp.wav"))
 		return false;
@@ -58,7 +58,7 @@ void	Audio::playSound(Sounds sound)
 void	Audio::setVolume(float volume)
 {
 	m_volume = volume;
-	m_music.setVolume(m_volume);
+	m_music.setVolume(m_volume / 2.f);
 	m_soundScore.setVolume(m_volume / 10.f);
 	m_soundTakeDamage.setVolume(m_volume);
 }

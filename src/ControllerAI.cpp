@@ -35,6 +35,11 @@ void ControllerAI::update(float deltaTime)
 	if (collisionTime < 0.f)
 		return;
 	distance = VecLength(target - paddleCenter);
+
+	// No need to move when distance close enough to hit paddle anyways
+	if (distance < PaddleHeight / 2.f)
+		return;
+
 	speed = PaddleMoveSpeed;
 
 	// Check if we need to use boost
@@ -43,6 +48,8 @@ void ControllerAI::update(float deltaTime)
 		speed *= BoostMultiplier;
 		m_pPaddle->boost(deltaTime);
 	}
+
+	// Move the paddle
 	if (target.y < paddleCenter.y)
 		m_pPaddle->move(-speed * deltaTime);
 	else
